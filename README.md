@@ -3,7 +3,6 @@
 Tổng hợp các bài writeup (walkthrough) cho các challenge Blue Team trên [CyberDefenders](https://cyberdefenders.org) – nền tảng luyện tập Network Forensics, Endpoint Forensics, Malware Analysis, Threat Intel...
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/username/repo)
-![License](https://img.shields.io/badge/license-MIT-blue)
 
 ## 📖 Giới thiệu
 
