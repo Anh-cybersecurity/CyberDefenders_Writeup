@@ -13,10 +13,10 @@ Mỗi challenge được lưu trong một thư mục riêng, gồm writeup chi t
 ```
 cyberdefenders-writeups/
 ├── README.md
-├── Challenge Category/
-        └── Challenge #1
-        └── Challenge #2
-        └── .....
+├── Challenge_Name #1
+├── Challenge_Name #2
+├── Challenge_Name #3
+├── ....
 ```
 
 ## 🧰 Công cụ thường dùng
