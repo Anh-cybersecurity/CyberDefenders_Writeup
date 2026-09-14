@@ -43,7 +43,7 @@ Nhiệm vụ của bạn là điều tra email này bằng cách sử dụng cá
 <img width="1401" height="786" alt="image" src="https://github.com/user-attachments/assets/f2048e1e-9989-4fab-b02e-4392ec4c4413" />
 <img width="1490" height="786" alt="image" src="https://github.com/user-attachments/assets/78642623-3c50-4768-91c1-53c3dc72538d" />
 
-- Khi hover chuột lên trên cái Hyperlink text, thì tôi có thấy một đường dẫn đến địa chỉ sau (đã được defang): **hxxp[://]107[.]175[.]247[.]299/loader/install[.]exe**
+- Khi hover chuột lên trên cái Hyperlink text, thì tôi có thấy một đường dẫn đến địa chỉ sau (đã được defang): **hxxp[://]107[.]175[.]247[.]199/loader/install[.]exe**
 - Tôi sẽ thử submit cái địa chỉ IP lên trên VirusTotal để kiểm tra:
 <img width="1308" height="785" alt="image" src="https://github.com/user-attachments/assets/1a2755c0-3736-4c6a-ac2c-77ab586f2640" />
 <img width="1309" height="784" alt="image" src="https://github.com/user-attachments/assets/33769379-892b-403c-9d81-7aa5f496f8da" />
@@ -218,7 +218,7 @@ và `dkim=fail`
 | **IP của Sender** | 18[.]208[.]22[.]104 | |
 | **Return-Path** | erikajohana[.]lopez@uptc[.]edu[.]co | |
 | **Malicious IP** | 107[.]175[.]247[.]199 | |
-| **Malicious URL** | hxxp[://]107[.]175[.]247[.]299/loader/install[.]exe |https://urlhaus.abuse.ch/url/2381718/ |
+| **Malicious URL** | hxxp[://]107[.]175[.]247[.]199/loader/install[.]exe |https://urlhaus.abuse.ch/url/2381718/ |
 | **Malware** | CoinMiner and BitRAT | |
 | **Hash Coin Miner** | 453fb1c4b3b48361fa8a67dcedf1eaec39449cb5a146a7770c63d1dc0d7562f0| |
 | **Hash BitRat** | bf7628695c2df7a3020034a065397592a1f8850e59f9a448b555bc1c8c639539 | |
@@ -234,7 +234,7 @@ và `dkim=fail`
 | **Defense Evasion (TA0030)** | Obfuscated Files or Information | T1406 | Encode commandline ở dạng Base64 format |
 | **Command and Control (TA0011)** | Application Layer Protocol | T1071.001 | HTTP web protocols ở domain gh9st[.]mywire[.]org |
 | **Exfiltration (TA0010)** | Exfiltration Over Web Service | T1057.004 | Telegram Bot API |
-| **Impact (TA0040)** | Financial Theft | T1657 | Business Of Compromise (BEC) |
+| **Impact (TA0040)** | Financial Theft | T1657 | Business Email Compromise (BEC) |
 
 ---
 
