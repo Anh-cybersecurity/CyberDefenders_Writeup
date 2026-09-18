@@ -34,3 +34,81 @@ Một người dùng tưởng rằng mình đang tải xuống bộ công cụ S
 - Tôi import file này vào trong Autopsy để bắt đầu quá trình điều tra
 <img width="2559" height="1599" alt="image" src="https://github.com/user-attachments/assets/a2917f5e-a450-48ac-a550-5c0037b92e24" />
 
+- Sau khi đã import xong tôi sẽ bắt đầu thực hiện việc phân tích và điều tra
+
+---
+
+### Question 1. What was the malicious executable file name that the user downloaded?
+#### Phân tích:
+- Truy cập vào mục ~/Downloads/ folder của User, ở Public tôi thấy trong thư mục Downloads có chứa một executable là **SysInternals.exe**
+<img width="1545" height="570" alt="image" src="https://github.com/user-attachments/assets/2f51e1bb-5c1c-4d9f-9044-fe3cc1478dd2" />
+
+- Vậy file malicious là "SysInternals.exe"
+#### Đáp án:
+<img width="892" height="174" alt="image" src="https://github.com/user-attachments/assets/3e140d14-ca00-4178-a507-b002c07b8584" />
+
+---
+
+### Question 2. When was the last time the malicious executable file was modified?
+#### Phân tích: 
+- Ở mục đó, ta tiếp tục nhìn mục properties thì thấy **Modified Time** là **2022-11-16 04:18:51 ICT**
+<img width="504" height="308" alt="image" src="https://github.com/user-attachments/assets/22cc5177-5b3c-40b5-a6a6-762a9b47a559" />
+
+- Nếu ta convert thời gian đó sang UTC format thì sẽ thu được là **2022-11-15 21:18:51 UTC**
+- Vậy nên thời gian cần tìm là theo format "YYYY-MM-DD HH:MM" là **2022-11-15 21:18**
+#### Đáp án:
+<img width="896" height="169" alt="image" src="https://github.com/user-attachments/assets/6c6ce991-3c0a-4088-8ae2-2eab9382c33c" />
+
+---
+
+### Question 3. What is the SHA1 hash value of the malware?
+#### Phân tích:
+- Theo như research một chút, thì ta biết được location nó được lưu là: **C:\Windows\AppCompat\Programs\Amcache.hve**
+<img width="1918" height="478" alt="image" src="https://github.com/user-attachments/assets/903a3402-4a32-4db4-a8f5-d8a0ed0b0a79" />
+<img width="1919" height="417" alt="image" src="https://github.com/user-attachments/assets/d9283817-6c0f-474e-b9e4-fc5d5f313ebe" />
+
+- Ta export file đó về Export sau đó ta sử dụng tools AmcacheParser của Eric Zimmerman
+
+```
+AmcacheParser.exe --csv "D:\Documents\CyberDefenders\100-SysInternals\sysinternal\Outputs" -f "D:\Documents\CyberDefenders\100-SysInternals\sysinternal\Export\Amcache.hve"
+```
+
+- Ta thu được các file output.csv sau:
+<img width="1693" height="763" alt="image" src="https://github.com/user-attachments/assets/c062c0dd-d574-47f9-88d7-5a186189528a" />
+
+- Vì đang điều tra file .exe nên ta sẽ thực hiện vào `20260918235302_Amcache_UnassociatedFileEntries.csv`
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/81c4d856-335c-4330-ad59-307cc40ade73" />
+
+- Mã SHA1 hash thu được là: **`fa1002b02fc5551e075ec44bb4ff9cc13d563dcf`**
+#### Đáp án:
+<img width="897" height="171" alt="image" src="https://github.com/user-attachments/assets/62a99872-c0ce-4fa6-919c-b6e41019bfd8" />
+
+---
+
+### Question 4. Based on the Alibaba vendor, what is the malware's family?
+#### Phân tích: 
+- Ta thu được mã hash SHA1 của file .exe malicious đó, nên giờ tôi sẽ thực hiện việc submit nó lên trên VirusTotal để kiểm tra về thông tin của malware này
+<img width="1918" height="957" alt="image" src="https://github.com/user-attachments/assets/03e72971-c2ca-434c-af0e-2a420f2a5b91" />
+
+- Theo như Alibaba Vendor, thì Malware này thuộc family là: **Rozena**
+<img width="1799" height="506" alt="image" src="https://github.com/user-attachments/assets/88c200ae-3d9a-46eb-b7bc-1ffd8864c6ab" />
+
+#### Đáp án: 
+<img width="888" height="165" alt="image" src="https://github.com/user-attachments/assets/41e4a363-1a96-4f93-8fb8-85b874f0d3a5" />
+
+---
+
+### Question 5. What is the first mapped domain's Fully Qualified Domain Name (FQDN)?
+#### Phân tích:
+- Ta kiểm tra trong mục Relations tab
+<img width="1796" height="267" alt="image" src="https://github.com/user-attachments/assets/1c2f7bd4-d5a0-4604-a092-0f71679d465b" />
+
+- URL đầu tiên được scanned là: hxxp[://]www[.]malware430[.]com/html/VMwareUpdate[.]exe
+- Vậy FQDN đầu tiên bị scanned là www[.]malware430[.]com
+#### Đáp án:
+<img width="900" height="177" alt="image" src="https://github.com/user-attachments/assets/80f420f5-817f-42ff-843b-99a225d0db94" />
+
+---
+
+### Question 6. The mapped domain is linked to an IP address. What is that IP address?
+#### Phân tích: 
