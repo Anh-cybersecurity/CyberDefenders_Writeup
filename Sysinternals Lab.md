@@ -112,3 +112,44 @@ AmcacheParser.exe --csv "D:\Documents\CyberDefenders\100-SysInternals\sysinterna
 
 ### Question 6. The mapped domain is linked to an IP address. What is that IP address?
 #### Phân tích: 
+- Câu này lúc làm tôi có stuck nên đã đọc hint đầu tiên của bài:
+The IP address linked to the domain might be recorded in PowerShell command history or in the system's hosts file.
+- Vậy nên tôi đi kiểm tra, Powershell của User
+<img width="1619" height="689" alt="image" src="https://github.com/user-attachments/assets/fbfd7eba-603b-43bb-8538-9b6025883132" />
+
+- Đọc dòng lệnh PS có thấy liên quan đến địa chỉ www[.]malware430[.]com
+
+```
+Add-Content -Path $env:windir\System32\drivers\etc\hosts -Value "`n192.168.15.10`twww.malware430.com" -Force
+Add-Content -Path $env:windir\System32\drivers\etc\hosts -Value "`n192.168.15.10`twww.sysinternals.com" -Force
+```
+
+- Vậy nên IP cần tìm là: 192[.]168[.]15[.]10
+#### Đáp án:
+<img width="891" height="169" alt="image" src="https://github.com/user-attachments/assets/f1e09478-cb81-4800-bc9d-b0657ec873df" />
+
+---
+
+### Question 7. What is the name of the executable dropped by the first-stage executable?
+#### Phân tích:
+- Vào mục Behavior, Process Created Tree, mình thấy được cái relation như sau
+<img width="996" height="296" alt="image" src="https://github.com/user-attachments/assets/52d5ebe5-6645-4bb0-9f18-f5891b05fe40" />
+
+- Trong command shell này có một cái ta cần lưu ý:
+
+```
+"C:\Windows\System32\cmd.exe" /C c:\Windows\vmtoolsIO.exe -install && net start VMwareIOHelperService && sc config VMwareIOHelperService start= auto
+```
+
+- Lệnh này đã tải vmtoolsIO[.]exe và sau đó có chạy thêm VMwareIOHelperService
+#### Đáp án:
+<img width="896" height="174" alt="image" src="https://github.com/user-attachments/assets/e617e119-9578-4509-b168-ed908fa10577" />
+
+---
+
+### Question 8. What is the name of the service installed by 2nd stage executable?
+#### Phân tích:
+- Dựa vào phân tích của câu số 7
+- Dịch vụ được chạy bởi 2nd stage executable là VMwareIOHelperService
+#### Đáp án:
+<img width="908" height="185" alt="image" src="https://github.com/user-attachments/assets/bd3642f4-d501-41d2-ba50-bf9ec1443c90" />
