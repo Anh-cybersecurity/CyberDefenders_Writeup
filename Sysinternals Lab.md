@@ -13,8 +13,8 @@
 | **Danh mục** | Endpoint Forensics |
 | **Độ khó** | Medium |
 | **Link challenge** | [Link](https://cyberdefenders.org/blueteam-ctf-challenges/sysinternals/) |
-| **File/artifact cung cấp** |  |
-| **Proof of Completion** |  |
+| **File/artifact cung cấp** | SysInternal.E01 |
+| **Proof of Completion** | https://cyberdefenders.org/blueteam-ctf-challenges/achievements/TuananhCyberSecurity/sysinternals/ |
 
 #CyberDefenders #CyberSecurity #BlueYard #BlueTeam #InfoSec #SOC #SOCAnalyst #DFIR #CCD #CyberDefender
 
@@ -22,10 +22,9 @@
 Một người dùng tưởng rằng mình đang tải xuống bộ công cụ SysInternals và đã thử mở nó, nhưng các công cụ này không khởi chạy được và trở nên không thể truy cập. Kể từ đó, người dùng nhận thấy hệ thống của mình dần trở nên chậm chạp và kém phản hồi.
 
 ## Công cụ sử dụng
-- Autopsy
+- Autopsy/FTK Imager
 - VirusTotal
-- Registry Explorer
-- Event Log Explorer
+- Amcache Parser
 
 ## Quá trình phân tích
 - Khi giải nén, tôi thu được một file có đuôi .E01 như sau:
