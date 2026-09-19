@@ -169,28 +169,31 @@ Trong bài tập Sherlock này, bạn sẽ làm quen với các bản ghi Sysmon
 ## 🚩 Indicators of Compromise (IOC)
 
 | Loại | Giá trị | Ghi chú |
-|---|---|---|
-| **IP** | [x.x.x.x] | |
-| **Domain** | [domain[.]com] | |
-| **File name** | [tên file] | |
-| **SHA1 / SHA256** | [hash] | |
-| **URL** | [hxxp://...] | |
-| **Service/Registry** | [tên service/key] | |
+| --- | --- | --- |
+| **IP** | 93[.]184[.]216[.]34 | Destination IP, port 80 — đã bị flag trên VirusTotal |
+| **Domain** | www[.]example[.]com | Dummy domain dùng để check internet connectivity trước khi thực hiện hành vi độc hại |
+| **File name (malicious)** | Preventivo24.02.14.exe.exe | File tải từ Dropbox, chạy dưới user CyberJunkie, nguồn lây nhiễm ban đầu |
+| **File name (dropped)** | once.cmd | `C:\Users\CyberJunkie\AppData\Roaming\Photo and Fax Vn\Photo and vn 1.1.2\install\F97891C\WindowsVolume\Games\once.cmd` |
+| **File name (installer)** | main1.msi | `C:\Users\CyberJunkie\AppData\Roaming\Photo and Fax Vn\Photo and vn 1.1.2\install\F97891C\main1.msi` |
+| **Process path (suspicious)** | C:\Windows\SysWOW64\msiexec.exe | Bất thường vì msiexec.exe hợp lệ phải nằm ở System32, không phải SysWOW64 |
+| **Cloud service** | Dropbox.com | Nền tảng phân phối malware, truy cập qua Firefox |
+| **Time Stomping timestamp** | 2024-01-14 08:10:06 | Timestamp giả bị gán cho file PDF để đánh lừa điều tra |
+| **Process termination time** | 2024-02-14 03:41:58 | Thời điểm malicious process tự kết thúc sau khi cài UltraVNC backdoor |
+| **Malware family** | Backdoored UltraVNC | Theo research của Unit42 (Palo Alto) |
 
 ## MITRE ATT&CK
 
 | Tactic | Technique | ID | Ghi chú |
-|---|---|---|---|
-| **[Tactic] (TAxxxx)** | [Technique name] | [Txxxx.xxx] | [Ghi chú ngắn gọn] |
-| | | | |
+| --- | --- | --- | --- |
+| **Initial Access (TA0001)** | Phishing / User-executed malicious file | T1566 / T1204.002 | Người dùng CyberJunkie tải và chạy Preventivo24.02.14.exe.exe từ Dropbox |
+| **Execution (TA0002)** | Windows Installer | T1218.007 | Kẻ tấn công lợi dụng msiexec.exe (LOLBIN) để cài đặt main1.msi, thực thi payload dưới vỏ bọc hợp lệ |
+| **Defense Evasion (TA0005)** | Timestomp | T1070.006 | Sửa timestamp của file PDF thành 2024-01-14 08:10:06 để trốn tránh phát hiện |
+| **Defense Evasion (TA0005)** | Masquerading | T1036.005 | msiexec.exe chạy từ SysWOW64 thay vì System32 — đường dẫn bất thường so với binary hệ thống hợp lệ |
+| **Discovery (TA0007)** | System Network Connections Discovery | T1016 | Truy vấn DNS đến dummy domain www.example.com để kiểm tra kết nối internet trước khi tiếp tục hành vi độc hại |
+| **Command and Control (TA0011)** | Application Layer Protocol / Web Protocols | T1071.001 | Kết nối tới 93.184.216.34 qua port 80 (HTTP) |
+| **Persistence / C2 (TA0003 / TA0011)** | Remote Access Software | T1219 | Cài đặt bản UltraVNC bị backdoor để duy trì quyền truy cập từ xa vào hệ thống nạn nhân |
+| **Execution (TA0002)** | Windows Command Shell | T1059.003 | Sử dụng once.cmd (file .cmd) làm script thực thi trong quá trình cài đặt |
 
 ## Bài học rút ra
-
-- [Bài học kỹ thuật/nhận thức rút ra sau khi hoàn thành lab]
-- [Kỹ năng/công cụ mới học được]
-- [Điều cần lưu ý cho lần điều tra sau]
-
-## 🔗 Tài liệu tham khảo
-
-- [Link challenge gốc]
-- [Link tài liệu bổ sung nếu có — MITRE ATT&CK, blog phân tích malware, v.v.]
+- Sử dụng các công cụ trên Window event viewer
+- Học các phân loại sử dụng các EventID của Sysmon
