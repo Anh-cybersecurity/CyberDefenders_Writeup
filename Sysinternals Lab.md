@@ -184,4 +184,4 @@ Add-Content -Path $env:windir\System32\drivers\etc\hosts -Value "`n192.168.15.10
 
 ## Bài học rút ra
 - Học được cách sử dụng Autopsy trong quá trình điều tra một file disk image
-- Học được về các kỹ thuật khai thác Amcache hve và Powershell history
+- Học được về các kỹ thuật khai thác Amcache hve và Powershell history (Tham khảo nguồn document đã viết trong thư mục Notes)
