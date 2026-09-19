@@ -24,13 +24,3 @@ C:\Users\<username>\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\Cons
 Attacker dùng `Add-Content -Path $env:windir\...\hosts` để ghi IP giả — đây là thao tác **tương tác trực tiếp qua console** (không phải script chạy ẩn), nên gần như chắc chắn bị PSReadLine ghi lại trong `ConsoleHost_history.txt`, kể cả khi Script Block Logging chưa được bật trên máy nạn nhân.
 
 ---
-
-## Tóm tắt: Khi nào dùng artifact nào?
-
-| Câu hỏi điều tra | Artifact nên check trước |
-|---|---|
-| Tìm hash file (kể cả đã bị xóa) | Amcache.hve |
-| Tìm đường dẫn/thời gian file xuất hiện lần đầu | Amcache.hve |
-| Tìm lệnh user gõ thủ công (domain, IP, config thay đổi) | PowerShell `ConsoleHost_history.txt` |
-| Tìm script bị obfuscate/chạy ẩn | Event ID 4104 (Script Block Logging) |
-| Xác nhận file đã **thực thi** (không chỉ xuất hiện) | Prefetch, EVTX 4688, ShimCache — kết hợp với Amcache |
