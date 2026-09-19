@@ -152,3 +152,36 @@ Add-Content -Path $env:windir\System32\drivers\etc\hosts -Value "`n192.168.15.10
 - Dịch vụ được chạy bởi 2nd stage executable là VMwareIOHelperService
 #### Đáp án:
 <img width="908" height="185" alt="image" src="https://github.com/user-attachments/assets/bd3642f4-d501-41d2-ba50-bf9ec1443c90" />
+
+## 🚩 Indicators of Compromise (IOC)
+**Malware Family:** Rozena
+
+| Loại IOC | Giá trị | Ghi chú |
+|---|---|---|
+| File name (Stage 1) | `SysInternals.exe` | File giả danh SysInternals, được tải về `~/Downloads` |
+| SHA1 (Stage 1) | `fa1002b02fc5551e075ec44bb4ff9cc13d563dcf` | Lấy từ Amcache.hve (AmcacheParser) |
+| Modified Time | `2022-11-15 21:18 UTC` | Thời gian chỉnh sửa cuối của file .exe |
+| Malware Family | Rozena | Theo vendor Alibaba trên VirusTotal |
+| File name (Stage 2 / dropped) | `vmtoolsIO.exe` | Được drop bởi `SysInternals.exe`, giả danh VMware Tools |
+| Service Name | `VMwareIOHelperService` | Service được cài đặt bởi Stage 2, dùng cho persistence |
+| Domain (C2/mapped) | `www[.]malware430[.]com` | FQDN đầu tiên bị scan/liên kết với malware |
+| Domain (giả mạo) | `www[.]sysinternals[.]com` | Được ghi thêm vào hosts file để đánh lừa |
+| IP Address | `192[.]168[.]15[.]10` | Ánh xạ với cả 2 domain trên qua hosts file |
+| File Path (Amcache) | `C:\Windows\AppCompat\Programs\Amcache.hve` | Nguồn tra cứu SHA1 |
+| Command (Persistence) | `cmd.exe /C c:\Windows\vmtoolsIO.exe -install && net start VMwareIOHelperService && sc config VMwareIOHelperService start= auto` | Lệnh cài đặt & khởi động service độc hại |
+| Hosts File Modification | `Add-Content -Path $env:windir\System32\drivers\etc\hosts -Value "192.168.15.10`t`twww.malware430.com" -Force` | PowerShell command ghi vào hosts file |
+
+## MITRE ATT&CK
+| Tactic | Technique | ID | Mô tả |
+|---|---|---|---|
+| Initial Access | Drive-by Compromise / User Execution: Malicious File | T1189 / T1204.002 | User tự tải và chạy `SysInternals.exe` giả mạo |
+| Defense Evasion | Masquerading | T1036 | File/service giả danh SysInternals & VMware Tools (`vmtoolsIO.exe`, `VMwareIOHelperService`) |
+| Defense Evasion | Impair Defenses: Modify Hosts File | T1564 / T1565 (tham khảo) | Ghi thêm entry vào hosts file để redirect/đánh lừa |
+| Execution | Command and Scripting Interpreter: Windows Command Shell / PowerShell | T1059.003 / T1059.001 | Dùng `cmd.exe` và PowerShell để cài đặt, khởi chạy |
+| Persistence | Create or Modify System Process: Windows Service | T1543.003 | Cài đặt service `VMwareIOHelperService` với `sc config ... start= auto` |
+| Command and Control | Application Layer Protocol / DNS | T1071 | Kết nối tới `www[.]malware430[.]com` |
+| Discovery | System Network Configuration Discovery (suy luận) | T1016 | Dựa trên hành vi ghi hosts file, có thể liên quan đến việc kiểm tra/định tuyến mạng |
+
+## Bài học rút ra
+- Học được cách sử dụng Autopsy trong quá trình điều tra một file disk image
+- Học được về các kỹ thuật khai thác Amcache hve và Powershell history
