@@ -13,6 +13,7 @@ Mỗi challenge được lưu trong một thư mục riêng, gồm writeup chi t
 ```
 cyberdefenders-writeups/
 ├── README.md
+├── Notes                       //Folder này để note lại các kiến thức, lý thuyết, kỹ thuật liên quan
 ├── Challenge_Name #1
 ├── Challenge_Name #2
 ├── Challenge_Name #3
