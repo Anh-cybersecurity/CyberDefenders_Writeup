@@ -1,4 +1,5 @@
 # [SYSINTERNALS] – CyberDefenders Writeup
+_Writeup được hoàn thành bởi Tuananh – 18.09.2026_
 
 ![CyberDefenders](https://img.shields.io/badge/CyberDefenders-Blue%20Team%20Lab-blue)
 ![Category](https://img.shields.io/badge/Category-Endpoint%20Forensics-lightgrey)
